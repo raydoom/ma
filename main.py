@@ -49,7 +49,6 @@ def display(result):
 		print (result[x])
 		
 if __name__ == "__main__":
-	
 	html = baidu_sou('zrbao')
 	burl = get_burl(html)
 	url = get_real_url_name(burl)
