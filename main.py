@@ -21,19 +21,16 @@ def baidu_sou(wd):
 def get_burl(html):
 	soup = BeautifulSoup(html,'html.parser')
 	print ('time:' ,datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-	print ('numbers of result:' ,len(soup.findAll(name = 'h3')))
-	
+	print ('numbers of result:' ,len(soup.findAll(name = 'h3')))	
 	h = (soup.findAll(name = 'h3'))
 #	s = str(h[4]).split('href=')
 	burl = []
-	for x in range(len(soup.findAll(name = 'h3'))):
-	
+	for x in range(len(soup.findAll(name = 'h3'))):	
 		s = (str(h[x]).split('href=')[1].split()[0])
 #		print  (str(h[x]).split('href=')[1].split()[0])
 		link = s.replace('"','')
 		burl.append(link)
-
-#	print (burl)
+#		print (burl)
 	return burl
 		
 def get_real_url_name(burl):
