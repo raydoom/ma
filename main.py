@@ -1,23 +1,10 @@
 #! /usr/bin/python 
 # -*- coding: utf-8 -*-
 
-import urllib
-
-class ma:
-        def open(self,url):
-                s = urllib.urlopen(url)
-                con = s.readlines(20)
-                info = s.info()
-                status = s.getcode()
-                print con
-                print info
-                print status
-
-def download(urld,file):
-        urllib.urlretrieve(urld,file,reporthook=progress)
-
-def progress(blk,blk_size,total_size):
-        print('%dkb/%dkb = %.02f%%' % (blk*blk_size,total_size,(float)(blk*blk_size)*100/total_size))
+import threading
+import datetime
+import requests
+from bs4 import BeautifulSoup
 
 def baidu_sou(wd):
 	try:
@@ -25,14 +12,15 @@ def baidu_sou(wd):
 		wd = {'wd':wd}
 		r = requests.get(url,params=wd)
 		r.raise_for_status()
-#		r.encoding = r.apparent_encoding
-		r.encoding = 'utf-8'
+		r.encoding = r.apparent_encoding
+#		r.encoding = 'utf-8'
 		return r.text		
 	except:
 		print ('baidu_sou failed')
 
 def get_burl(html):
 	soup = BeautifulSoup(html,'html.parser')
+	print ('time:' ,datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 	print ('numbers of result:' ,len(soup.findAll(name = 'h3')))
 	
 	h = (soup.findAll(name = 'h3'))
@@ -53,11 +41,9 @@ def get_real_url_name(burl):
 	result = []
 	for x in range(l):
 		s = requests.get(burl[x])
-#		print (s.url)
 		s.encoding = s.apparent_encoding
 		soup = BeautifulSoup(s.text,'html.parser')
-#		print (soup.title)
-		result.append(soup.url)
+		result.append(s.url)
 		result.append(soup.title)
 	return result
         
