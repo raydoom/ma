@@ -3,7 +3,7 @@
 #author ma
 #usage  restart.sh 8601 [8602 8603]
 if [ $# -lt 1 ];then
-        echo 'no args... exit '
+        echo 'no args... exit'
         exit 0
 else
 for ((i=1;i<=$#;i++)); do
