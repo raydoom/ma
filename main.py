@@ -1,7 +1,9 @@
 #! /usr/bin/python 
 # -*- coding: utf-8 -*-
 
+import sys
 import threading
+import pymysql
 import datetime
 import requests
 from bs4 import BeautifulSoup
@@ -38,19 +40,38 @@ def get_real_url_name(burl):
 	result = []
 	for x in range(l):
 		s = requests.get(burl[x])
-		s.encoding = s.apparent_encoding
+#		s.encoding = s.apparent_encoding
+		s.encoding = 'utf-8'
 		soup = BeautifulSoup(s.text,'html.parser')
 		result.append(s.url)
-		result.append(soup.title)
+		result.append(str(soup.title).replace('<title>','')[:-8])
+		print (x)
 	return result
         
 def display(result):
 	for x in range(len(result)):
 		print (result[x])
 		
+def insert_into_db(keyword,result):
+	conn= pymysql.connect(host='192.168.0.33',port = 3306,user='root',passwd='111111',db ='bd_result',)
+	cur = conn.cursor()
+	sql = "insert into result (keyword,title,url) values(%s,%s,%s)"
+	
+
+	for x in range(0,len(result),2):
+		cur.execute(sql,(keyword.encode('utf-8'),str(result[x+1]).encode('utf-8'),str(result[x]).encode('utf-8')))
+	
+	cur.close()
+	conn.commit()
+	conn.close()
+	
+	
+		
 if __name__ == "__main__":
-	html = baidu_sou('zrbao')
+	keyword = 'zrbao'
+	html = baidu_sou(keyword)
 	burl = get_burl(html)
 	url = get_real_url_name(burl)
 	get_real_url_name(burl)
-	display(url)
+	#display(url)
+	insert_into_db(keyword,url)
