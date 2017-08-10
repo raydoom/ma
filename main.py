@@ -65,7 +65,6 @@ def insert_into_db(keyword,result):
 	conn.commit()
 	conn.close()
 	
-	
 		
 if __name__ == "__main__":
 	keyword = 'zrbao'
