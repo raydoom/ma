@@ -1,7 +1,7 @@
 
 from slackclient import SlackClient
 BOT_NAME = 'mabot'
-slack_client = SlackClient('xoxb-416094684882-593503250807-pJRofFHwJbKD3AA8JdpY1Og5')
+slack_client = SlackClient('authentication tokens')
 if __name__ == "__main__":
     api_call = slack_client.api_call("users.list")
     if api_call.get('ok'):

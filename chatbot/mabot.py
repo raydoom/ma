@@ -7,7 +7,7 @@ BOT_ID = 'UHFET7CPR'
 AT_BOT = "<@" + BOT_ID + ">:"
 EXAMPLE_COMMAND = "do"
 # 实例化 Slack 和 Twilio 客户端
-slack_client = SlackClient('xoxb-416094684882-593503250807-pJRofFHwJbKD3AA8JdpY1Og5')
+slack_client = SlackClient('authentication tokens')
 def handle_command(command, channel):
     """
         Receives commands directed at the bot and determines if they
